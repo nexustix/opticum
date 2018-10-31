@@ -5,17 +5,6 @@ import shutil
 from pynt import task
 
 deps = [
-    {
-    "kind":"git",
-    "name":"openautocraft",
-    "location":"https://github.com/nexustix/OpenAutocraft.git",
-    "version":"latest"},
-
-    {
-    "kind":"git",
-    "name":"openstoreroom",
-    "location":"https://github.com/nexustix/OpenStoreroom.git",
-    "version":"latest"},
     ]
 
 
@@ -82,7 +71,7 @@ def dupdate():
 def assets():
     '''copy asset folder'''
     x = subprocess.run(["mkdir", "-p", os.path.join("./build", "assets")], capture_output=True)
-    y = subprocess.run(["cp", "-r", os.path.join("./assets"), os.path.join("./build", "assets")], capture_output=True)
+    y = subprocess.run(["cp", "-r", os.path.join("./assets"), os.path.join("./build")], capture_output=True)
 
 
 @task(clean, dupdate, assets)
@@ -96,5 +85,10 @@ def wipe():
     '''wipe downloaded dependencies'''
     shutil.rmtree(os.path.join("./deps"), ignore_errors=True)
 
+@task(build)
+def debug():
+    #x = subprocess.run(["love", "./build"], capture_output=True)
+    p = subprocess.Popen(["love", "./build"])
+    p.wait()
 
-__DEFAULT__=build
+__DEFAULT__=debug
