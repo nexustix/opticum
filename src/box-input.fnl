@@ -1,16 +1,24 @@
+;(require-macros :nxoo2)
+
 (local widget (require :widget))
 
 (local utf8 (require :utf8))
 
-(defn inputbox []
-  (local self (widget 10 10 120 40))
+(defn inputbox [a]
+  (local self (widget a))
 
   ;(set self.theme ((require :theme)))
 
   (set self.font (love.graphics.getFont))
+  ;(set self.font (love.graphics.newFont 16))
+
   (set self.text "")
-  (set self.overflowing false)
-  (set self.stable-len 0)
+  ;(set self.overflowing false)
+  ;(set self.stable-len 0)
+  (set self.stable-len (/ self.transform.w (: self.font :getWidth "_")))
+  (set self.buffer
+    { :w 10
+      :h 10})
 
   (set self.counter 0)
   (set self.blinktime 50)
@@ -18,12 +26,10 @@
 
   (set self.editable true)
 
-  (set self.buffer (- (/ (- self.transform.h (: self.font :getHeight)) 2) 2))
-
   (defn self.on-return [text]
     (set self.text ""))
 
-  (tset self :on-update
+  (set self.on-update
     (let [super self.on-update]
       (fn []
         (super)
@@ -34,12 +40,16 @@
           (set self.cursor-visible (not self.cursor-visible))
           (set self.counter 0))
 
-        (let [cur-len (+ (: self.font :getWidth self.text) (* self.buffer 2))]
-          (if (> cur-len (- self.transform.w (* self.buffer 2)))
-              (do)
-              (set self.stable-len (# self.text)))))))
+        ;(let [cur-len (+ (: self.font :getWidth self.text) (* self.buffer 2))]
+        ;  (if (> cur-len (- self.transform.w (* self.buffer 2)))
+        ;      (do)
+        ;      (set self.stable-len (# self.text)))))))
+        (set self.font (love.graphics.getFont))
+        (set self.stable-len (- (/ self.transform.w (: self.font :getWidth "_")) 3))
+        (set self.buffer.h (/ (- self.transform.h (: self.font :getHeight "|")) 2))
+        (set self.buffer.w (/ (- self.transform.w (* self.stable-len (: self.font :getWidth "_"))) 4)))))
 
-  (tset self :on-draw
+  (set self.on-draw
     (let [super self.on-draw]
       (fn []
         (super)
@@ -48,29 +58,31 @@
         (when (and self.selected self.cursor-visible)
           (set tmp-text (.. tmp-text "|")))
 
-        (love.graphics.setColor 1 1 1 1)
-        (love.graphics.print tmp-text (+ self.transform.x self.buffer) (+ self.transform.y self.buffer))
+        (self.theme.colour :main-foreground)
+        (love.graphics.printf tmp-text (+ self.transform.x self.buffer.w) (+ self.transform.y self.buffer.h) (- self.transform.w self.buffer.w))
 
         (love.graphics.setColor 1 1 1 1))))
 
-  (defn self.on-event [e]
-    (if (= e.kind :text)
-        (when self.selected
-          (set self.text (.. self.text e.text)))
+  (set self.on-event
+    (let [super self.on-event]
+      (fn [e]
+        (super e)
+        ;(print e.kind)
+        (if (= e.kind :text)
+            (when self.selected
+              (set self.text (.. self.text e.text)))
 
-        (= e.kind :keypressed
-           (when self.selected
-              ;(print e.key e.scancode e.isrepeat)
-              ;(print self.stable-len)
-              (if (= e.key :backspace)
-                  (do
-                    (local byteoffset (utf8.offset self.text -1))
-                    ;(print byteoffset)
-                    (when byteoffset
-                      (set self.text (string.sub self.text 1 (- byteoffset 1)))))
-                  (when (= e.key :return)
-                    (self.on-return self.text)))))))
-
-
+            (= e.kind :keypressed
+               (when self.selected
+                  ;(print e.key e.scancode e.isrepeat)
+                  (print self.stable-len)
+                  (if (= e.key :backspace)
+                      (do
+                        (local byteoffset (utf8.offset self.text -1))
+                        ;(print byteoffset)
+                        (when byteoffset
+                          (set self.text (string.sub self.text 1 (- byteoffset 1)))))
+                      (when (= e.key :return)
+                        (self.on-return self.text)))))))))
 
   self)
