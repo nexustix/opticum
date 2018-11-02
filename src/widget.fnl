@@ -62,29 +62,3 @@
           (set self.hovered (self.point-inside-p [e.x e.y])))))
 
   self)
-
-    ;(if (and (= e.kind :mousepressed) (= e.button 1))
-    ;    (if self.hovered
-    ;        (do
-    ;          (set self.clicked true)
-    ;          (when self.enabled
-    ;            (set self.selected true))
-    ;          true))
-
-    ;    (and (= e.kind :mousereleased) (= e.button 1))
-    ;    (do
-    ;      (set self.clicked false)
-    ;      (when self.hovered
-    ;        (self.on-clicked)
-    ;        true))
-    ;    (and (= e.kind :mousemoved)
-    ;      (if (and (> e.x self.transform.x) (< e.x (+ self.transform.x self.transform.w))
-    ;            (> e.y  self.transform.y) (< e.y (+ self.transform.y self.transform.h)))
-    ;          (if (not self.hovered)
-    ;              (do
-    ;                (self.on-hovered)
-    ;                (set self.hovered true)
-    ;                true)
-    ;              true)
-    ;          (set self.hovered false)))))
-  ;self)

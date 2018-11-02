@@ -31,18 +31,4 @@
         (self.theme.colour :main-foreground))
     (love.graphics.rectangle "line" (+ self.transform.x 1) (+ self.transform.y 1) (- self.transform.w 2) (- self.transform.h 2)))
 
-  ;(decorate self.on-event [e]
-  ;  (or
-  ;    (super e)
-  ;    (if (and (= e.kind :mousemoved))
-  ;        (if (and (> e.x self.transform.x) (< e.x (+ self.transform.x self.transform.w))
-  ;              (> e.y  self.transform.y) (< e.y (+ self.transform.y self.transform.h)))
-  ;            (if (not self.hovered)
-  ;                (do
-  ;                  (self.on-hovered)
-  ;                  (set self.hovered true)
-  ;                  true)
-  ;                true)
-  ;            (set self.hovered false)))))
-
   self)
