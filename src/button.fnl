@@ -1,7 +1,7 @@
-(local widget (require :widget))
+(local widget-rectangle (require :widget-rectangle))
 
 (defn button [a]
-  (local self (widget a))
+  (local self (widget-rectangle a))
 
   (set self.text "hello world")
 
@@ -12,9 +12,7 @@
     (let [super self.on-draw]
       (fn []
         (super)
-        ;(love.graphics.setColor 1 1 1 1)
         (self.theme.colour :main-foreground)
-        ;(love.graphics.print self.text self.transform.x self.transform.y))))
         (love.graphics.printf self.text self.transform.x (+ self.transform.y self.buffer) self.transform.w "center"))))
 
   (defn self.on-clicked []

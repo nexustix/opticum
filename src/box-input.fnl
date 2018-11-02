@@ -1,11 +1,13 @@
-;(require-macros :nxoo2)
+(require-macros :nxoo2)
 
-(local widget (require :widget))
+(local widget-rectangle (require :widget-rectangle))
 
 (local utf8 (require :utf8))
 
 (defn inputbox [a]
-  (local self (widget a))
+  (local self (widget-rectangle a))
+
+  (set self.selectable true)
 
   ;(set self.theme ((require :theme)))
 
@@ -49,19 +51,20 @@
         (set self.buffer.h (/ (- self.transform.h (: self.font :getHeight "|")) 2))
         (set self.buffer.w (/ (- self.transform.w (* self.stable-len (: self.font :getWidth "_"))) 4)))))
 
-  (set self.on-draw
-    (let [super self.on-draw]
-      (fn []
-        (super)
-        (var tmp-text self.text)
-        (set tmp-text (string.sub tmp-text (- self.stable-len)))
-        (when (and self.selected self.cursor-visible)
-          (set tmp-text (.. tmp-text "|")))
+  ;(set self.on-draw
+  ;  (let [super self.on-draw]
+  ;    (fn []
+  (decorate self.on-draw []
+    (super)
+    (var tmp-text self.text)
+    (set tmp-text (string.sub tmp-text (- self.stable-len)))
+    (when (and self.selected self.cursor-visible)
+      (set tmp-text (.. tmp-text "|")))
 
-        (self.theme.colour :main-foreground)
-        (love.graphics.printf tmp-text (+ self.transform.x self.buffer.w) (+ self.transform.y self.buffer.h) (- self.transform.w self.buffer.w))
+    (self.theme.colour :main-foreground)
+    (love.graphics.printf tmp-text (+ self.transform.x self.buffer.w) (+ self.transform.y self.buffer.h) (- self.transform.w self.buffer.w))
 
-        (love.graphics.setColor 1 1 1 1))))
+    (love.graphics.setColor 1 1 1 1))
 
   (set self.on-event
     (let [super self.on-event]
@@ -75,7 +78,7 @@
             (= e.kind :keypressed
                (when self.selected
                   ;(print e.key e.scancode e.isrepeat)
-                  (print self.stable-len)
+                  ;(print self.stable-len)
                   (if (= e.key :backspace)
                       (do
                         (local byteoffset (utf8.offset self.text -1))
