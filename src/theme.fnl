@@ -5,6 +5,9 @@
   (defn oct [n]
     (/ n 255))
 
+  (set self.white [1.0 1.0 1.0 1.0])
+  (set self.black [0.0 0.0 0.0 0.0])
+
   (set self.border-light [1.0 1.0 1.0 1.0])
   (set self.border-dark [0.2 0.2 0.2 1.0])
 
@@ -23,9 +26,14 @@
   (set self.main-background [(oct 16) (oct 16) (oct 16)])
   (set self.main-foreground [0.938889  0.515185  0.144445])
 
-  (defn self.colour [colour alpha isfloaty]
+  (set self.bg self.main-background)
+  (set self.fg self.main-foreground)
+
+  (defn self.colour [colour alpha]
     (let [ctable (. self colour)
-          alpha (or (. ctable 4) alpha (and isfloaty 1) 255)]
+          isfloaty (and alpha (not (= (math.floor alpha) alpha)))
+          ;alpha (or (. ctable 4) alpha (and isfloaty 1) 255)]
+          alpha (or (. ctable 4) alpha 255)]
       (if ctable
         (if isfloaty
           (love.graphics.setColor (. ctable 1) (. ctable 2) (. ctable 3) alpha)

@@ -2,6 +2,11 @@
   (local self {})
   (local a (or a {}))
 
+  ;name of widget
+  (set self.name a.name)
+  ;group of widget
+  (set self.group a.group)
+
   ;size and location of the widget
   (set self.transform
     { :x (or a.x 10)
@@ -49,6 +54,8 @@
               (do
                 (set self.clicked self.hovered)
                 self.hovered)))
+              ;(not self.hovered)
+              ;(set self.selected false)))
         (= e.kind :mousereleased)
         (do
           (if (and self.hovered self.clicked)
@@ -60,5 +67,4 @@
         (= e.kind :mousemoved)
         (do
           (set self.hovered (self.point-inside-p [e.x e.y])))))
-
   self)
