@@ -3,6 +3,7 @@
 (local box-input (require :ui-box-input))
 (local button (require :ui-button))
 (local viewport (require :ui-viewport))
+(local progress-circle (require :ui-progress-circle))
 
 (defn gui-manager [the-love]
   (local self {})
@@ -39,6 +40,8 @@
         (self.add-widget (box-input a))
         (= a.kind :viewport)
         (self.add-widget (viewport a))
+        (= a.kind :progress-circle)
+        (self.add-widget (progress-circle a))
         (print "<!> error loading widget")))
 
   (defn self.get-widget [numid]

@@ -1,6 +1,7 @@
-(local box-input (require :ui-box-input))
-(local button (require :ui-button))
-(local viewport (require :ui-viewport))
+;(local box-input (require :ui-box-input))
+;(local button (require :ui-button))
+;(local viewport (require :ui-viewport))
+(local progress-circle (require :ui-progress-circle))
 (local gui-manager (require :gui-manager))
 (local testgui (require :testgui))
 
@@ -15,6 +16,8 @@
 ;(local mid (gm.add-widget (viewport {:name "map" :x 10 :y 10 :w 300 :h 300 :theme theme})))
 ;(local map (gm.get-widget mid))
 (local map (gm.find-widget "map"))
+
+;(gm.add-widget (progress-circle {:name "test-progress-circle" :x 10 :y 10 :w 64 :h 64 :theme theme}))
 
 
 (defn love.load []
