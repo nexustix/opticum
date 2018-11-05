@@ -57,7 +57,7 @@
       (let [super (or tlove.update (fn []))]
         (fn [dt]
           (super dt)
-          (alldo :on-update []))))
+          (alldo :on-update [dt]))))
 
     (decorate tlove.draw []
       (super)
