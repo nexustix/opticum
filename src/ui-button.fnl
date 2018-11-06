@@ -9,13 +9,10 @@
   (set self.font (love.graphics.getFont))
   (set self.buffer (- (/ (- self.transform.h (: self.font :getHeight)) 2) 2))
 
-  (tset self :on-draw
-    (let [super self.on-draw]
-      (fn []
-  ;(decorate self.on-draw []
+  (decorate self.on-draw []
         (super)
         (self.theme.colour :main-foreground)
-        (love.graphics.printf self.text self.transform.x (+ self.transform.y self.buffer) self.transform.w "center"))))
+        (love.graphics.printf self.text self.transform.x (+ self.transform.y self.buffer) self.transform.w "center"))
 
   (defn self.on-clicked []
     (if (= self.text "hello world")

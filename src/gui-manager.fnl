@@ -12,16 +12,6 @@
 
   (set self.dragging [false false false])
 
-  ;(let [(x y) (love.mouse.getPosition)]
-  ;  (set self.dragging
-  ;    { :lx x
-  ;      :ly y
-  ;      :rx x
-  ;      :ry y
-  ;      :mx x
-  ;      :my y}))
-
-
   (defn alldo [todo args exclusively]
     (var done false)
     (for [i self.counter 1 -1]

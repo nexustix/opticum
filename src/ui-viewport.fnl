@@ -28,7 +28,6 @@
     (love.graphics.setCanvas))
 
   (decorate self.on-draw []
-    ;(super))
     (self.theme.colour :fg 128)
     (love.graphics.rectangle "fill" self.transform.x self.transform.y self.transform.w self.transform.h)
 
@@ -43,14 +42,6 @@
       (super e)
       (when (and self.selected (. e.buttons 2))
         (self.scroll e.dx e.dy))))
-
-
-  ;(decorate self.on-event [e]
-  ;  (or
-  ;    (super e)
-  ;    (if (and (= e.kind :mousedragged) (. e.buttons 2))
-  ;        (when self.selected
-  ;          (self.scroll e.dx e.dy)))))
 
 
 

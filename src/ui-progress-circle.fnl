@@ -2,7 +2,6 @@
 
 (local widget-rectangle (require :widget-rectangle))
 
-;local r = (value - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin
 (defn conv-interval [value old-min old-max new-min new-max]
   (+ (/ (* (- value old-min) (- new-max new-min)) (- old-max old-min)) new-min))
 
@@ -35,17 +34,13 @@
     (love.graphics.circle "line" self.tx self.ty self.tr))
 
   (decorate self.on-update [dt]
-    ;(print dt)
     (super dt)
     (set self.cur (% (+ self.cur (* 30 dt)) self.max)))
 
   (decorate self.on-draw []
-    ;(super)
     (self.theme.colour :fg 64)
     (love.graphics.rectangle "fill" self.transform.x self.transform.y self.transform.w self.transform.h)
-    ;(love.graphics.arc "line" self.tx self.ty self.tr (/ math.pi 6) (* math.pi 2))
     (self.theme.colour :fg)
-    ;(love.graphics.arc "line" self.tx self.ty self.tr (/ math.pi 6) (* math.pi 2))
     (let [lwidth-back (love.graphics.getLineWidth)]
       (love.graphics.setLineWidth self.linew)
       (love.graphics.stencil self.stencil)
