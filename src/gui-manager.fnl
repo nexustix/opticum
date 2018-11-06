@@ -68,26 +68,38 @@
 
     (decorate tlove.textinput [t]
       (super t)
-      (alldo :on-event [{:kind "text" :text t}] true))
+      (local e {:kind "text" :text t})
+      (alldo :on-event [e] true)
+      (alldo :on-event-textinput [e] true))
 
     (decorate tlove.keypressed [key scancode isrepeat]
       (super key scancode isrepeat)
-      (alldo :on-event [{:kind "keypressed" :key key :scancode scancode :isrepeat isrepeat}] true))
+      (local e {:kind "keypressed" :key key :scancode scancode :isrepeat isrepeat})
+      (alldo :on-event [e] true)
+      (alldo :on-event-keypressed [e] true))
 
     (decorate tlove.mousepressed [x y button istouch presses]
       (super x y button istouch presses)
       (tset self.dragging button true)
-      (alldo :on-event [{:kind "mousepressed" :x x :y y :button button :istouch istouch :presses presses}] true))
+      (local e {:kind "mousepressed" :x x :y y :button button :istouch istouch :presses presses})
+      (alldo :on-event [e] true)
+      (alldo :on-event-mousepressed [e] true))
 
     (decorate tlove.mousereleased [x y button istouch presses]
       (super x y button istouch presses)
       (tset self.dragging button false)
-      (alldo :on-event [{:kind "mousereleased" :x x :y y :button button :istouch istouch :presses presses}] true))
+      (local e {:kind "mousereleased" :x x :y y :button button :istouch istouch :presses presses})
+      (alldo :on-event [e] true)
+      (alldo :on-event-mousereleased [e] true))
 
     (decorate tlove.mousemoved [x y dx dy istouch]
       (super x y dx dy istouch)
       (each [k v (pairs self.dragging)]
         (when v
-          (alldo :on-event [{:kind "mousedragged" :x x :y y :dx dx :dy dy :istouch istouch}] true)))
-      (alldo :on-event [{:kind "mousemoved" :x x :y y :dx dx :dy dy :istouch istouch}] true)))
+          (local e {:kind "mousedragged" :x x :y y :dx dx :dy dy :istouch istouch :buttons self.dragging})
+          (alldo :on-event [e] true)
+          (alldo :on-event-mousedragged [e] true)))
+      (local e {:kind "mousemoved" :x x :y y :dx dx :dy dy :istouch istouch})
+      (alldo :on-event [e] true)
+      (alldo :on-event-mousemoved [e] true)))
   self)

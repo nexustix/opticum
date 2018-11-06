@@ -43,28 +43,59 @@
 
   (defn self.on-draw [])
 
-  (defn self.on-event [e]
-    (if (= e.kind :mousepressed)
-        (do
-          (if (and self.selectable self.hovered)
-              (do
-                (set self.selected true)
-                (set self.clicked true)
-                true)
-              (do
-                (set self.clicked self.hovered)
-                self.hovered)))
-              ;(not self.hovered)
-              ;(set self.selected false)))
-        (= e.kind :mousereleased)
-        (do
-          (if (and self.hovered self.clicked)
-              (do
-                (self.on-clicked)
-                (set self.clicked false)
-                true)
-              (set self.clicked false)))
-        (= e.kind :mousemoved)
-        (do
-          (set self.hovered (self.point-inside-p [e.x e.y])))))
+  (defn self.on-event-mousepressed [e]
+    (do
+      (if (and self.selectable self.hovered)
+          (do
+            (set self.selected true)
+            (set self.clicked true)
+            true)
+          (not self.hovered)
+          (set self.selected false)
+          (do
+            (set self.clicked self.hovered)
+            self.hovered))))
+
+  (defn self.on-event-mousereleased [e]
+    (do
+      (if (and self.hovered self.clicked)
+          (do
+            (self.on-clicked)
+            (set self.clicked false)
+            true)
+          (set self.clicked false))))
+
+  (defn self.on-event-mousemoved [e]
+    (do
+      (set self.hovered (self.point-inside-p [e.x e.y]))))
+
+  (defn self.on-event-mousedragged [e])
+
+  (defn self.on-event-textinput [e])
+  (defn self.on-event-keypressed [e])
+
+  ;(defn self.on-event- [e])
+
+  (defn self.on-event [e])
+    ;(if (= e.kind :mousepressed)
+    ;    (do
+    ;      (if (and self.selectable self.hovered)
+    ;          (do
+    ;            (set self.selected true)
+    ;            (set self.clicked true)
+    ;            true)
+    ;          (do
+    ;            (set self.clicked self.hovered)
+    ;            self.hovered)))
+    ;    (= e.kind :mousereleased)
+    ;    (do
+    ;      (if (and self.hovered self.clicked)
+    ;          (do
+    ;            (self.on-clicked)
+    ;            (set self.clicked false)
+    ;            true)
+    ;          (set self.clicked false)))
+    ;    (= e.kind :mousemoved)
+    ;    (do
+    ;      (set self.hovered (self.point-inside-p [e.x e.y])))))
   self)

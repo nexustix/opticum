@@ -1,3 +1,4 @@
+(require-macros :nxoo2)
 (local widget-rectangle (require :widget-rectangle))
 
 (defn button [a]
@@ -11,6 +12,7 @@
   (tset self :on-draw
     (let [super self.on-draw]
       (fn []
+  ;(decorate self.on-draw []
         (super)
         (self.theme.colour :main-foreground)
         (love.graphics.printf self.text self.transform.x (+ self.transform.y self.buffer) self.transform.w "center"))))

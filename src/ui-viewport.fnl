@@ -38,12 +38,19 @@
       (love.graphics.draw self.canvas self.transform.x self.transform.y)
       (love.graphics.setBlendMode mode alphamode)))
 
-  (decorate self.on-event [e]
+  (decorate self.on-event-mousedragged [e]
     (or
       (super e)
-      (if (= e.kind :mousedragged)
-          (when self.selected
-            (self.scroll e.dx e.dy)))))
+      (when (and self.selected (. e.buttons 2))
+        (self.scroll e.dx e.dy))))
+
+
+  ;(decorate self.on-event [e]
+  ;  (or
+  ;    (super e)
+  ;    (if (and (= e.kind :mousedragged) (. e.buttons 2))
+  ;        (when self.selected
+  ;          (self.scroll e.dx e.dy)))))
 
 
 
