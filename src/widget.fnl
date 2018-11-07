@@ -44,24 +44,27 @@
   (defn self.on-draw [])
 
   (defn self.on-event-mousepressed [e]
-    (if (and self.selectable self.hovered)
-        (do
-          (set self.selected true)
-          (set self.clicked true)
-          true)
-        (not self.hovered)
-        (set self.selected false)
-        (do
-          (set self.clicked self.hovered)
-          self.hovered)))
+    (when (= e.button 1)
+      (if (and self.selectable self.hovered)
+          (do
+            (set self.selected true)
+            (set self.clicked true)
+            true)
+          (not self.hovered)
+          (set self.selected false)
+          (do
+            (set self.clicked self.hovered)
+            self.hovered))))
 
   (defn self.on-event-mousereleased [e]
-    (if (and self.hovered self.clicked)
-        (do
-          (self.on-clicked)
-          (set self.clicked false)
-          true)
-        (set self.clicked false)))
+    (when (= e.button 1)
+      (if (and self.hovered self.clicked)
+          (do
+            ;x y button
+            (self.on-clicked (- self.transform.x e.x) (- self.transform.y e.y))
+            (set self.clicked false)
+            true)
+          (set self.clicked false))))
 
   (defn self.on-event-mousemoved [e]
     (set self.hovered (self.point-inside-p [e.x e.y])))
