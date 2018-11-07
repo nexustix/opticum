@@ -28,11 +28,15 @@
     (love.graphics.setCanvas))
 
   (decorate self.on-draw []
-    (self.theme.colour :fg 128)
+    ;(self.theme.colour :fg 128)
+
+    (if self.selected
+        (self.theme.colour :fgd)
+        (self.theme.colour :fgdd))
     (love.graphics.rectangle "fill" self.transform.x self.transform.y self.transform.w self.transform.h)
 
     (let [(mode alphamode) (love.graphics.getBlendMode)]
-      (self.theme.colour :white)
+      (self.theme.colour :test)
       (love.graphics.setBlendMode "alpha" "premultiplied")
       (love.graphics.draw self.canvas self.transform.x self.transform.y)
       (love.graphics.setBlendMode mode alphamode)))

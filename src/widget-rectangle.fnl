@@ -15,12 +15,14 @@
   (defn self.on-draw []
     ;body
     (if self.clicked
-        (self.theme.colour :main-foreground 200)
+        (self.theme.colour :fgd)
         self.hovered
-        (self.theme.colour :main-foreground 128)
+        ;(self.theme.colour :main-foreground 128)
+        (self.theme.colour :fgdd)
         self.selected
-        (self.theme.colour :main-foreground 80)
-        (self.theme.colour :main-foreground 64))
+        ;(self.theme.colour :main-foreground 80)
+        (self.theme.colour :fgdd)
+        (self.theme.colour :fgddd))
     (love.graphics.rectangle "fill" self.transform.x self.transform.y self.transform.w self.transform.h)
 
     ;frame
