@@ -31,12 +31,12 @@
     ;(self.theme.colour :fg 128)
 
     (if self.selected
-        (self.theme.colour :fgd)
-        (self.theme.colour :fgdd))
+        (self.theme.colour :fgdd)
+        (self.theme.colour :fgddd))
     (love.graphics.rectangle "fill" self.transform.x self.transform.y self.transform.w self.transform.h)
 
     (let [(mode alphamode) (love.graphics.getBlendMode)]
-      (self.theme.colour :test)
+      (self.theme.colour :fg)
       (love.graphics.setBlendMode "alpha" "premultiplied")
       (love.graphics.draw self.canvas self.transform.x self.transform.y)
       (love.graphics.setBlendMode mode alphamode)))
@@ -46,7 +46,5 @@
       (super e)
       (when (and self.selected (. e.buttons 2))
         (self.scroll e.dx e.dy))))
-
-
 
   self)

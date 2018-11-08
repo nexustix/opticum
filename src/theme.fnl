@@ -20,17 +20,10 @@
   ;(set self.main-background [(oct 16) (oct 16) (oct 16)])
   ;(set self.main-foreground [(oct 80) (oct 103) (oct 180)])
   (set self.main-background [(oct 16) (oct 16) (oct 16)])
-  (set self.main-foreground [0.938889  0.515185  0.144445])
-
-  ;(set self.content-background-idle [0.125490  0.176471  0.223529 1])
-  ;(set self.content-background-hover [0.395588  0.477941  0.563235 1])
-  ;(set self.content-background-selected  [0.207843  0.317647  0.431373 1])
-  ;(set self.content-background-clicked [0.539216  0.539216  0.5392165 1])
-
-  ;(set self.content-foreground-idle [0.1 0.1 0.1 1.0])
-  ;(set self.content-foreground-hover [0.1 0.1 0.1 1.0])
-  ;(set self.content-foreground-selected [0.1 0.1 0.1 1.0])
-  ;(set self.content-foreground-clicked [0.1 0.1 0.1 1.0])
+  (set self.main-foreground [0.938889  0.515185  0.144445]) ; amber
+  ;(set self.main-foreground [0.000000  1.000000  1.000000]) ; cyan
+  ;(set self.main-foreground [1.000000  0.124526  0.000000]); red
+  ;(set self.main-foreground [0.033333  1.000000  0.000000]); green
 
   (set self.main-foreground-dimmest  (alpha self.main-foreground (oct 32)))
   (set self.main-foreground-dimmer   (alpha self.main-foreground (oct 64)))

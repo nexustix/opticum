@@ -38,7 +38,7 @@
     (set self.cur (% (+ self.cur (* 30 dt)) self.max)))
 
   (decorate self.on-draw []
-    (self.theme.colour :fg 64)
+    (self.theme.colour :fgddd)
     (love.graphics.rectangle "fill" self.transform.x self.transform.y self.transform.w self.transform.h)
     (self.theme.colour :fg)
     (let [lwidth-back (love.graphics.getLineWidth)]
