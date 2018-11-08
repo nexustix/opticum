@@ -55,22 +55,41 @@
 
     (love.graphics.setColor 1 1 1 1))
 
-  (set self.on-event
-    (let [super self.on-event]
-      (fn [e]
-        (super e)
-        (if (= e.kind :text)
-            (when self.selected
-              (set self.text (.. self.text e.text)))
+  (decorate self.on-event-textinput [e]
+    (or
+      (super e)
+      (when self.selected
+        (set self.text (.. self.text e.text)))))
 
-            (= e.kind :keypressed
-               (when self.selected
-                  (if (= e.key :backspace)
-                      (do
-                        (local byteoffset (utf8.offset self.text -1))
-                        (when byteoffset
-                          (set self.text (string.sub self.text 1 (- byteoffset 1)))))
-                      (when (= e.key :return)
-                        (self.on-return self.text)))))))))
+  (decorate self.on-event-keypressed [e]
+    (or
+      (super e)
+      (when self.selected
+         (if (= e.key :backspace)
+             (do
+               (local byteoffset (utf8.offset self.text -1))
+               (when byteoffset
+                 (set self.text (string.sub self.text 1 (- byteoffset 1)))))
+             (when (= e.key :return)
+               (self.on-return self.text))))))
+
+
+  ;(set self.on-event
+  ;  (let [super self.on-event]
+  ;    (fn [e]
+  ;      (super e)
+  ;      (if (= e.kind :textinput)
+  ;          (when self.selected
+  ;            (set self.text (.. self.text e.text)))
+
+  ;          (= e.kind :keypressed
+  ;             (when self.selected
+  ;                (if (= e.key :backspace)
+  ;                    (do
+  ;                      (local byteoffset (utf8.offset self.text -1))
+  ;                      (when byteoffset
+  ;                        (set self.text (string.sub self.text 1 (- byteoffset 1)))))
+  ;                    (when (= e.key :return)
+  ;                      (self.on-return self.text)))))))))
 
   self)

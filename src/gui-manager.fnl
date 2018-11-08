@@ -14,9 +14,14 @@
 
   (defn alldo [todo args exclusively]
     (var done false)
+    ;HACK
+    (local exclusively false)
+    (local args (or args []))
     (for [i self.counter 1 -1]
       (when (not (and exclusively done))
-        (set done ((. (. self.widgets i) todo) (unpack args))))))
+        (set done ((. (. self.widgets i) todo) (unpack args)))
+        (when (and (. args 1) (= (type (. args 1)) :table))
+          (tset (. args 1) :consumed done)))))
 
   (defn self.add-widget [widget]
     (set self.counter (+ self.counter 1))
@@ -58,7 +63,7 @@
 
     (decorate tlove.textinput [t]
       (super t)
-      (local e {:kind "text" :text t})
+      (local e {:kind "textinput" :text t})
       (alldo :on-event [e] true)
       (alldo :on-event-textinput [e] true))
 

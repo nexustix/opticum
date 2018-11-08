@@ -45,20 +45,21 @@
 
   (defn self.on-event-mousepressed [e]
     (when (= e.button 1)
-      (if (and self.selectable self.hovered)
+      (if (and (not e.consumed) self.selectable self.hovered)
           (do
             (set self.selected true)
             (set self.clicked true)
             true)
-          (not self.hovered)
+          (and self.selectable (not self.hovered))
           (set self.selected false)
+          (not e.consumed)
           (do
             (set self.clicked self.hovered)
             self.hovered))))
 
   (defn self.on-event-mousereleased [e]
     (when (= e.button 1)
-      (if (and self.hovered self.clicked)
+      (if (and (not e.consumed) self.hovered self.clicked)
           (do
             ;x y button
             (self.on-clicked (- self.transform.x e.x) (- self.transform.y e.y))
@@ -67,7 +68,8 @@
           (set self.clicked false))))
 
   (defn self.on-event-mousemoved [e]
-    (set self.hovered (self.point-inside-p [e.x e.y])))
+    (set self.hovered (and (not e.consumed) (self.point-inside-p [e.x e.y])))
+    self.hovered)
 
   (defn self.on-event-mousedragged [e])
 
@@ -77,5 +79,7 @@
   ;(defn self.on-event- [e])
 
   (defn self.on-event [e])
+    ;(when (and (= e.kind :mousepressed) (= e.button 1))
+    ;  (if (and self.selectable self.hovered))))
 
   self)
