@@ -1,6 +1,6 @@
 (require-macros :nxoo2)
 
-(local widget-rectangle (require :widget-rectangle))
+(local widget-rectangle (require :opticum.widget-rectangle))
 
 (defn conv-interval [value old-min old-max new-min new-max]
   (+ (/ (* (- value old-min) (- new-max new-min)) (- old-max old-min)) new-min))

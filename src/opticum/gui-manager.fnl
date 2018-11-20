@@ -1,9 +1,9 @@
 (require-macros :nxoo2)
 
-(local box-input (require :ui-box-input))
-(local button (require :ui-button))
-(local viewport (require :ui-viewport))
-(local progress-circle (require :ui-progress-circle))
+(local box-input (require :opticum.ui-box-input))
+(local button (require :opticum.ui-button))
+(local viewport (require :opticum.ui-viewport))
+(local progress-circle (require :opticum.ui-progress-circle))
 
 (defn gui-manager [the-love]
   (local self {})

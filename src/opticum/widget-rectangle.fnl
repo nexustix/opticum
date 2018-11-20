@@ -1,5 +1,5 @@
 (require-macros :nxoo2)
-(local widget (require :widget))
+(local widget (require :opticum.widget))
 
 (defn widget-rectangle [a]
   (local self (widget a))

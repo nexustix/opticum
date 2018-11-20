@@ -1,4 +1,4 @@
-(local theme ((require :theme)))
+(local theme ((require :opticum.theme)))
 [
   { :kind "box-input" :name "test-textfield"
     :x 332 :y 164 :w 300 :h 40 :theme theme}

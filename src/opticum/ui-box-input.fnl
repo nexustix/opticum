@@ -1,6 +1,6 @@
 (require-macros :nxoo2)
 
-(local widget-rectangle (require :widget-rectangle))
+(local widget-rectangle (require :opticum.widget-rectangle))
 
 (local utf8 (require :utf8))
 

@@ -1,11 +1,11 @@
 ;(local box-input (require :ui-box-input))
 ;(local button (require :ui-button))
 ;(local viewport (require :ui-viewport))
-(local progress-circle (require :ui-progress-circle))
-(local gui-manager (require :gui-manager))
+(local progress-circle (require :opticum.ui-progress-circle))
+(local gui-manager (require :opticum.gui-manager))
 (local testgui (require :testgui))
 
-(local theme ((require :theme)))
+(local theme ((require :opticum.theme)))
 
 (local gm (gui-manager))
 
