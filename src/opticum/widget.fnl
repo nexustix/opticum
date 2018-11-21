@@ -22,6 +22,8 @@
   (set self.enabled true)
   ;is the element selectable
   (set self.selectable false)
+  ;is the element clickable
+  (set self.clickable true)
   ;is the element selected
   (set self.selected false)
   ;is the user hovering over the element
@@ -45,25 +47,27 @@
 
   (defn self.on-event-mousepressed [e]
     (when (= e.button 1)
-      (if (and (not e.consumed) self.selectable self.hovered)
+      (if (and (not e.consumed) self.hovered)
           (do
-            (set self.selected true)
-            (set self.clicked true)
+            (when self.selectable (set self.selected true))
+            (when self.clickable (set self.clicked true))
             true)
-          (and self.selectable (not self.hovered))
-          (set self.selected false)
+          (and (not self.hovered))
+          (when self.selectable (set self.selected false))
           (not e.consumed)
-          (do
+          (when self.clickable
             (set self.clicked self.hovered)
-            self.hovered))))
+            self.hovered)
+          false)))
 
   (defn self.on-event-mousereleased [e]
     (when (= e.button 1)
       (if (and (not e.consumed) self.hovered self.clicked)
           (do
-            ;x y button
-            (self.on-clicked (- self.transform.x e.x) (- self.transform.y e.y))
-            (set self.clicked false)
+            (when self.clickable
+              ;x y button
+              (self.on-clicked (- self.transform.x e.x) (- self.transform.y e.y))
+              (set self.clicked false))
             true)
           (set self.clicked false))))
 
