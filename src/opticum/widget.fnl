@@ -15,7 +15,7 @@
       :h (or a.h 10)})
 
   ;theme of the widget
-  (set self.theme (or a.theme ((require :theme))))
+  (set self.theme (or a.theme ((require :opticum.theme))))
   (set self.shadow false)
 
   ;can the user interact with this element

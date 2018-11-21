@@ -5,10 +5,13 @@
 (local viewport (require :opticum.ui-viewport))
 (local progress-circle (require :opticum.ui-progress-circle))
 
-(defn gui-manager [the-love]
+(defn gui-manager [a]
+  (local a (or a {}))
   (local self {})
+
   (set self.widgets {})
   (set self.counter 0)
+  (set self.default-theme (or a.theme ((require :opticum.theme))))
 
   (set self.dragging [false false false])
 
@@ -23,8 +26,12 @@
         (when (and (. args 1) (= (type (. args 1)) :table))
           (tset (. args 1) :consumed done)))))
 
+  (defn self.get-theme []
+    self.default-theme)
+
   (defn self.add-widget [widget]
     (set self.counter (+ self.counter 1))
+    (set widget.theme (or widget.theme self.default-theme))
     (tset self.widgets self.counter widget)
     self.counter)
 

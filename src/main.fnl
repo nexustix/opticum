@@ -5,9 +5,10 @@
 (local gui-manager (require :opticum.gui-manager))
 (local testgui (require :testgui))
 
-(local theme ((require :opticum.theme)))
-
 (local gm (gui-manager))
+
+;(local theme ((require :opticum.theme)))
+(local theme (gm.get-theme))
 
 (each [k v (pairs testgui)]
   (gm.load-widget v))
